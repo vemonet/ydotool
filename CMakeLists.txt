@@ -10,12 +10,14 @@ find_package(PkgConfig)
 
 # Try to get the systemd directory for user units from the package
 # and fall back on upstream default without the '/usr' prefix
-pkg_check_modules(SYSTEMD systemd)
-if (SYSTEMD_FOUND)
-    pkg_get_variable(SD_UNITDIR systemd systemduserunitdir)
-else()
-    set(SD_UNITDIR "lib/systemd/user")
-endif()
+#pkg_check_modules(SYSTEMD systemd)
+#if (SYSTEMD_FOUND)
+#    pkg_get_variable(SD_UNITDIR systemd systemduserunitdir)
+#else()
+#    set(SD_UNITDIR "lib/systemd/user")
+#endif()
+# NOTE: fix to install to /app in flatpak
+set(SD_UNITDIR "${CMAKE_INSTALL_PREFIX}/lib/systemd/user")
 
 execute_process(COMMAND git describe --tags --long --always RESULT_VARIABLE RC_GIT_VER OUTPUT_VARIABLE GIT_VERSION)
 
